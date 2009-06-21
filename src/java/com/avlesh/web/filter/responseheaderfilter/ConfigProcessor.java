@@ -240,8 +240,7 @@ public class ConfigProcessor {
     MappingProcessor processorClassInstance = null;
     if(StringUtils.isNotEmpty(processorClass)){
         try {
-        Object mappingProcessor = Class.forName(processorClass);
-        processorClassInstance = (MappingProcessor)mappingProcessor.getClass().newInstance();
+        processorClassInstance = (MappingProcessor)(Class.forName(processorClass).newInstance());
       } catch (ClassNotFoundException e) {
         throw new RuntimeException("Processor class " + processorClass + " not found");
       } catch (ClassCastException e){
