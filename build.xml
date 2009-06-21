@@ -20,8 +20,10 @@
   <property name="java-src.dir" value="src/java" />
   <property name="lib.dir" value="lib" />
   <property name="build.dir" value="build" />
+  <property name="dist.dir" value="dist" />
   <property name="project.name" value="response-header-filter" />
   <property name="project.version" value="1.0" />
+  <property name="archive.name" value="${project.name}-${project.version}" />
 
   <path id="classpath">
     <fileset dir="${lib.dir}" includes="*.jar" />
@@ -39,6 +41,7 @@
     <echo message="" />
     <echo message="compile         --> Compile all Java files" />
     <echo message="jar             --> Package as JAR file" />
+    <echo message="sourceZip       --> Creates a source zip archive" />
   </target>
 
   <target name="compile"  description="Compile main source tree java files">
@@ -50,13 +53,27 @@
   </target>
 
   <target name="jar" depends="compile" description="packages up the class files into jar files">
-    <property name="archive.name" value="${project.name}-${project.version}" />
-    <jar destfile="${archive.name}.jar" basedir="${build.dir}/classes" includes="**" excludes="com/askme/commons/tools/**"/>
+    <jar destfile="${build.dir}/${archive.name}.jar" basedir="${build.dir}/classes" includes="**"/>
+    <move file="${build.dir}/${archive.name}.jar" todir="${dist.dir}" overwrite="true"/>
+  </target>
+
+  <target name="sourceZip" depends="compile" description="packages up the class files into jar files">
+    <delete dir="${dist.dir}/source/${archive.name}-src" failonerror="false"/>
+    <delete file="${dist.dir}/${archive.name}-src.zip" failonerror="false"/>
+    <mkdir dir="${dist.dir}/source/${archive.name}-src"/>
+    <copy todir="${dist.dir}/source/${archive.name}-src" overwrite="true">
+      <fileset dir="." excludes="dist/**, build/**, *.iml, *.ipr, *.iws, **/.svn/**"/>
+    </copy>
+    <zip basedir="${dist.dir}/source" destfile="${dist.dir}/${archive.name}-src.zip"/>
+    <delete dir="${dist.dir}/source" failonerror="false"/>
+  </target>
+
+  <target name="dist" depends="clean">
+    <antcall target="jar"/>
+    <antcall target="sourceZip"/>
   </target>
 
   <target name="clean" description="Clean output directories">
-  	<property name="archive.name" value="${project.name}-${project.version}" />
-  	<delete dir="build" />
-  	<delete  file="${archive.name}.jar" />
+  	<delete dir="${build.dir}"/>
   </target>
 </project>
