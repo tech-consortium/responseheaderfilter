@@ -19,7 +19,7 @@ package com.avlesh.web.filter.responseheaderfilter;
 /**
  * Constants, mostly DOM node names in the <code>configFile</code> for the filter.
  * @see ConfigProcessor
- * @see ResponseHeaderManagerFilter
+ * @see ResponseHeaderFilter
  */
 public class Constants {
   public static final String RESPONSE_HEADER_MAPPER = "response-header-mapper";

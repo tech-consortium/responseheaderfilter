@@ -21,15 +21,15 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Each &lt;mapping&gt; definition in the <code>configFile</code> is converted into a {@link Rule}
+ * Each &lt;mapping&gt; definition in the <code>configFile</code> is converted into a {@link Mapping}
  * <br/>
  * For a sample rule, click here - {@link ConfigProcessor}
  * <br/>
  * For parsing rules, click here - {@link ConfigProcessor#processConfig()}
  * @see ConfigProcessor
- * @see ResponseHeaderManagerFilter
+ * @see ResponseHeaderFilter
  */
-public class Rule {
+public class Mapping {
   private MappingProcessor processorClass;
   private Pattern url;
   private List<ResponseHeader> defaultResponseHeaders;
@@ -39,10 +39,10 @@ public class Rule {
    * Comprises of parsed values for a &lt;conditional&gt; tag <br/>
    * For parsing rules, click here - {@link ConfigProcessor#getCondition(org.w3c.dom.Node)}
    *
-   * @see Rule
+   * @see Mapping
    * @see ResponseHeader
    * @see ConfigProcessor
-   * @see ResponseHeaderManagerFilter
+   * @see ResponseHeaderFilter
    */
   public static class Condition {
     private String queryParamName;
@@ -69,10 +69,10 @@ public class Rule {
    * Comprises of parsed values for &lt;header&gt; nodes inside a &lt;response-headers&gt; tag<br/>
    * For parsing rules, click here - {@link ConfigProcessor#getResponseHeader(org.w3c.dom.Node)}
    *
-   * @see Rule
+   * @see Mapping
    * @see Condition
    * @see ConfigProcessor
-   * @see ResponseHeaderManagerFilter
+   * @see ResponseHeaderFilter
    */
   public static class ResponseHeader {
     private String responseHeaderKey;

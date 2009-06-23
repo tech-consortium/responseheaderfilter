@@ -30,7 +30,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * <code>ResponseHeaderManagerFilter</code> is a Java Web Filter for any J2EE compliant web application server
+ * <code>ResponseHeaderFilter</code> is a Java Web Filter for any J2EE compliant web application server
  * (such as Resin or Tomcat), which allows to transparently set response headers.
  * <br/><br/>
  * Some of the most commonly used response headers that this filter can apply are:
@@ -45,7 +45,7 @@ import org.apache.commons.lang.StringUtils;
  *
  * This filter performs two main tasks:
  * <ol>
- *  <li>Implements the rules ({@link Rule}) obtained
+ *  <li>Implements the rules ({@link Mapping}) obtained
  *  using {@link ConfigProcessor#getRuleMap()}.
  *  </li>
  *  <li>Based on the {@link ConfReloadInfo}, trigger a reload of the configuration if the
@@ -58,8 +58,8 @@ import org.apache.commons.lang.StringUtils;
  * @see ConfigProcessor
  * @see ConfigProcessor#processConfig()
  */
-public class ResponseHeaderManagerFilter implements Filter {
-  private static Log logger = LogFactory.getLog(ResponseHeaderManagerFilter.class);
+public class ResponseHeaderFilter implements Filter {
+  private static Log logger = LogFactory.getLog(ResponseHeaderFilter.class);
 
   //default config file
   private String configFileName = "/WEB-INF/response-header-manager.xml";
@@ -69,7 +69,7 @@ public class ResponseHeaderManagerFilter implements Filter {
   private ConfReloadInfo confReloadInfo;
 
   //map of rules; is updated accored to rules specified in the confReloadInfo
-  private static Map<Pattern, Rule> rules = new ConcurrentHashMap<Pattern, Rule>();
+  private static Map<Pattern, Mapping> rules = new ConcurrentHashMap<Pattern, Mapping>();
   private static List<Pattern> urlPatterns = new ArrayList<Pattern>();
   
   public void init(FilterConfig filterConfig) throws ServletException, RuntimeException {
@@ -82,7 +82,7 @@ public class ResponseHeaderManagerFilter implements Filter {
     configFile = new File(fullConfigFilePath);
     if(!configFile.exists() || !configFile.canRead()){
       //not expecting this, the config file should exist and be readable
-      throw new RuntimeException("Cannot initialize ResponseHeaderManagerFilter, error reading " + configFileName);
+      throw new RuntimeException("Cannot initialize ResponseHeaderFilter, error reading " + configFileName);
     }
 
     //object to hold preferences related to conf reloading
@@ -103,16 +103,16 @@ public class ResponseHeaderManagerFilter implements Filter {
 
     //parse all the mappings into Rules
     ConfigProcessor configProcessor = new ConfigProcessor(configFile);
-    Map<Pattern, Rule> allRules = configProcessor.getRuleMap();
+    Map<Pattern, Mapping> allRules = configProcessor.getRuleMap();
     urlPatterns.addAll(allRules.keySet());
     rules.putAll(allRules);
   }
 
   /**
-   * Underneath are the rules, which are used to process the response and apply a corresponding {@link Rule}
+   * Underneath are the rules, which are used to process the response and apply a corresponding {@link Mapping}
    * <ol>
    *  <li>The rules are applied on a <code>base uri.</code></li>
-   *  <li>First all the conditional rules (if available) for a {@link Rule} are matched.</li>
+   *  <li>First all the conditional rules (if available) for a {@link Mapping} are matched.</li>
    *  <li>Matching in #2 is done in the reverse order of declaration (of &lt;conditional&gt; tags)
    *  inside the <code>configFile</code>. <i>Last rule wins</i>.
    *  Matching does not cascade and the matcher breaks when a match is found.
@@ -142,19 +142,19 @@ public class ResponseHeaderManagerFilter implements Filter {
     Pattern matchingPatternForThisRequest = getMatchingPattern(requestUri);
     if(matchingPatternForThisRequest != null){
       boolean ruleApplied = false;
-      //this is the Rule to be applied
-      Rule rulesForThisUri = rules.get(matchingPatternForThisRequest);
+      //this is the Mapping to be applied
+      Mapping rulesForThisUri = rules.get(matchingPatternForThisRequest);
 
-      Map<Rule.Condition, List<Rule.ResponseHeader>> conditionalResponseHeaders = rulesForThisUri.getConditionalResponseHeaders();
+      Map<Mapping.Condition, List<Mapping.ResponseHeader>> conditionalResponseHeaders = rulesForThisUri.getConditionalResponseHeaders();
 
       //if there are conditional mappings in this rule, try an apply them first
       if(conditionalResponseHeaders != null){
-        Rule.Condition[] conditions = new Rule.Condition[conditionalResponseHeaders.size()];
+        Mapping.Condition[] conditions = new Mapping.Condition[conditionalResponseHeaders.size()];
         conditions = conditionalResponseHeaders.keySet().toArray(conditions);
 
         //do a reverse matching for the conditional mappings
         for(int i=conditions.length-1; i>=0; i--){
-          Rule.Condition condition = conditions[i];
+          Mapping.Condition condition = conditions[i];
           String queryParamName = condition.getQueryParamName();
           String requestParamValue = getRequestParamValue(request, queryParamName);
 
@@ -176,7 +176,7 @@ public class ResponseHeaderManagerFilter implements Filter {
         }
       }
 
-      //if none of the conditional rules matched; and their is a default mapping in the Rule, apply it
+      //if none of the conditional rules matched; and their is a default mapping in the Mapping, apply it
       if(!ruleApplied && rulesForThisUri.getDefaultResponseHeaders() != null){
         if(logger.isDebugEnabled()){
           String requestUrl = requestUri +
@@ -192,7 +192,7 @@ public class ResponseHeaderManagerFilter implements Filter {
   }
 
   /**
-   * Matches an incoming url against the available patterns in the {@link Rule} map. Involves an iteration over the map
+   * Matches an incoming url against the available patterns in the {@link Mapping} map. Involves an iteration over the map
    * keys for each request. Iterates in a reverse order on the map. <i>Last rule wins</i>.
    *
    * @param requestUri (Incoming request uri)
@@ -214,8 +214,8 @@ public class ResponseHeaderManagerFilter implements Filter {
    * <code>confReloadInfo.lastReloadCheckPerformedOn</code>, and the <code>configFile</code> has been modified again
    * after <code>confReloadInfo.configFileLastModifiedTimeStamp</code>, a cofiguration reload is triggered.
    *
-   * @see ResponseHeaderManagerFilter
-   * @see ResponseHeaderManagerFilter#doFilter(ServletRequest, ServletResponse, FilterChain) 
+   * @see ResponseHeaderFilter
+   * @see ResponseHeaderFilter#doFilter(ServletRequest, ServletResponse, FilterChain)
    */
   private void reloadConfigIfNeeded() {
     Long now = System.currentTimeMillis();
@@ -230,7 +230,7 @@ public class ResponseHeaderManagerFilter implements Filter {
       confReloadInfo.configFileLastModifiedTimeStamp = configFile.lastModified();
       confReloadInfo.lastReloadCheckPerformedOn = now;
       ConfigProcessor configProcessor = new ConfigProcessor(configFile);
-      Map<Pattern, Rule> allRules = configProcessor.getRuleMap();
+      Map<Pattern, Mapping> allRules = configProcessor.getRuleMap();
 
       /**
        * no concurrency issues here; concurrent retrievals in doFilter will merely face a contention untill
@@ -258,8 +258,8 @@ public class ResponseHeaderManagerFilter implements Filter {
    * @param queryParamName (Parameter which needs to be looked up)
    * @return String (The "value" of this parameter in the queryString)
    *
-   * @see ResponseHeaderManagerFilter
-   * @see ResponseHeaderManagerFilter#doFilter(ServletRequest, ServletResponse, FilterChain)
+   * @see ResponseHeaderFilter
+   * @see ResponseHeaderFilter#doFilter(ServletRequest, ServletResponse, FilterChain)
    */
   private static String getRequestParamValue(HttpServletRequest request, String queryParamName){
     String paramValue = null;
@@ -275,8 +275,8 @@ public class ResponseHeaderManagerFilter implements Filter {
   //applies all the response headers to the servlet response, as specified in the configFile
   private void applyResponseHeaders(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    List<Rule.ResponseHeader> responseHeaders,
-                                    Rule rulesForThisUri) {
+                                    List<Mapping.ResponseHeader> responseHeaders,
+                                    Mapping rulesForThisUri) {
     MappingProcessor processorClass = rulesForThisUri.getProcessorClass();
     processorClass.preProcess(request, response, rulesForThisUri);
     processorClass.applyHeaders(request, response, responseHeaders, rulesForThisUri);
@@ -297,7 +297,7 @@ public class ResponseHeaderManagerFilter implements Filter {
    * <li><code>configFileLastModifiedTimeStamp</code>: Store <code>lastModifiedTimeStamp</code> of the <code>configFile</code>.</li>
    * </ol>
    *
-   * @see ResponseHeaderManagerFilter
+   * @see ResponseHeaderFilter
    * @see ConfigProcessor
    */
   private class ConfReloadInfo{

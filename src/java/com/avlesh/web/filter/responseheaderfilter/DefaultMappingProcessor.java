@@ -21,18 +21,18 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class DefaultMappingProcessor implements MappingProcessor {
-  public void preProcess(HttpServletRequest request, HttpServletResponse response, Rule applicableRule) {
+  public void preProcess(HttpServletRequest request, HttpServletResponse response, Mapping applicableMapping) {
   }
 
   public void applyHeaders(HttpServletRequest request,
                            HttpServletResponse response, 
-                           List<Rule.ResponseHeader> responseHeaders,
-                           Rule applicableRule) {
-    for(Rule.ResponseHeader responseHeader : responseHeaders){
+                           List<Mapping.ResponseHeader> responseHeaders,
+                           Mapping applicableMapping) {
+    for(Mapping.ResponseHeader responseHeader : responseHeaders){
       response.setHeader(responseHeader.getResponseHeaderKey(), responseHeader.getResponseHeaderValue());
     }
   }
 
-  public void postProcess(HttpServletRequest request, HttpServletResponse response, Rule applicableRule) {
+  public void postProcess(HttpServletRequest request, HttpServletResponse response, Mapping applicableMapping) {
   }
 }
