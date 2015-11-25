@@ -1,0 +1,4 @@
+# Introduction #
+Like most of the other open source frameworks, this originated from a very personal and specific requirement. [ResponseHeaderFilter](http://code.google.com/p/responseheaderfilter/) is much more extensive and extensible than what it originally was. This has happened only because of users like yourself, who have kept me enthused by sending feature requests.
+
+The easiest way to get involved is help me fix the [open issues](http://code.google.com/p/responseheaderfilter/issues/list). Create issues only when they have not been reported earlier. I would appreciate initiatives for helping me out to create better and elaborate documentation for this filter.
