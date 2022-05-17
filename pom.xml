@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.avlesh.web.filter</groupId>
+  <artifactId>responseheaderfilter</artifactId>
+  <version>2.0-SNAPSHOT</version>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <java.version>${maven.compiler.source}</java.version>
+    <spotless.version>2.22.3</spotless.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.google.googlejavaformat</groupId>
+        <artifactId>google-java-format</artifactId>
+        <version>1.15.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.10.1</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>commons-collections</groupId>
+      <artifactId>commons-collections</artifactId>
+      <version>3.2.1</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.0.4</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.4</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${maven-compiler-plugin.version}</version>
+          <configuration>
+            <release>${java.version}</release>
+            <source>${java.version}</source>
+            <target>${java.version}</target>
+            <encoding>${project.build.sourceEncoding}</encoding>
+            <optimize>false</optimize>
+            <showDeprecation>true</showDeprecation>
+            <showWarnings>true</showWarnings>
+            <!--failOnWarning>true</failOnWarning-->
+            <compilerArgs>
+              <arg>-Xlint:all</arg>
+              <arg>-Xmaxwarns</arg>
+              <arg>25</arg>
+              <arg>-J--add-opens=-Jjdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED</arg>
+              <arg>-J--add-opens=-Jjdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED</arg>
+              <arg>-J--add-opens=-Jjdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</arg>
+              <arg>-J--add-opens=-Jjdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED</arg>
+              <arg>-J--add-opens=-Jjdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
+              <arg>-J--add-opens=-Jjdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED</arg>
+              <arg>-J--add-opens=-Jjdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>
+              <arg>-J--add-opens=-Jjdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</arg>
+              <arg>-J--add-opens=-Jjdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
+            </compilerArgs>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>com.diffplug.spotless</groupId>
+          <artifactId>spotless-maven-plugin</artifactId>
+          <version>${spotless.version}</version>
+          <configuration>
+            <pom>
+              <!-- These are the defaults, you can override if you want -->
+              <includes>
+                <include>pom.xml</include>
+              </includes>
+
+              <sortPom>
+
+                <encoding>UTF-8</encoding>
+                <!-- The encoding of the pom files -->
+
+                <lineSeparator>${line.separator}</lineSeparator>
+                <!-- line separator to use -->
+
+                <expandEmptyElements>true</expandEmptyElements>
+                <!-- Should empty elements be expanded-->
+
+                <spaceBeforeCloseEmptyElement>false</spaceBeforeCloseEmptyElement>
+                <!-- Should a space be added inside self-closing elements-->
+
+                <keepBlankLines>true</keepBlankLines>
+                <!-- Keep empty lines -->
+
+                <nrOfIndentSpace>2</nrOfIndentSpace>
+                <!-- Indentation -->
+
+                <indentBlankLines>false</indentBlankLines>
+                <!-- Should empty lines be indented -->
+
+                <indentSchemaLocation>false</indentSchemaLocation>
+                <!-- Should schema locations be indended -->
+
+                <predefinedSortOrder>recommended_2008_06</predefinedSortOrder>
+                <!-- Sort order of elements: https://github.com/Ekryd/sortpom/wiki/PredefinedSortOrderProfiles-->
+
+                <sortOrderFile></sortOrderFile>
+                <!-- Custom sort order of elements: https://raw.githubusercontent.com/Ekryd/sortpom/master/sorter/src/main/resources/custom_1.xml -->
+
+                <sortDependencies></sortDependencies>
+                <!-- Sort dependencies: https://github.com/Ekryd/sortpom/wiki/SortDependencies-->
+
+                <sortDependencyExclusions></sortDependencyExclusions>
+                <!-- Sort dependency exclusions: https://github.com/Ekryd/sortpom/wiki/SortDependencies-->
+
+                <sortPlugins></sortPlugins>
+                <!-- Sort plugins: https://github.com/Ekryd/sortpom/wiki/SortPlugins -->
+
+                <sortProperties></sortProperties>
+                <!-- Sort properties -->
+
+                <sortModules></sortModules>
+                <!-- Sort modules -->
+
+                <sortExecutions></sortExecutions>
+                <!-- Sort plugin executions -->
+              </sortPom>
+            </pom>
+            <java>
+              <googleJavaFormat>
+                <!-- Optional, available versions: https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22com.google.googlejavaformat%22%20AND%20a%3A%22google-java-format%22 -->
+                <version>1.8</version>
+                <!-- Optional, available versions: GOOGLE, AOSP  https://github.com/google/google-java-format/blob/master/core/src/main/java/com/google/googlejavaformat/java/JavaFormatterOptions.java -->
+                <style>GOOGLE</style>
+                <reflowLongStrings>true</reflowLongStrings>
+                <groupArtifact>com.google.googlejavaformat:google-java-format</groupArtifact>
+              </googleJavaFormat>
+              <encoding>${project.build.sourceEncoding}</encoding>
+            </java>
+            <encoding>${project.build.sourceEncoding}</encoding>
+          </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>com.google.googlejavaformat</groupId>
+              <artifactId>google-java-format</artifactId>
+              <version>1.15.0</version>
+            </dependency>
+            <dependency>
+              <groupId>org.eclipse.jgit</groupId>
+              <artifactId>org.eclipse.jgit</artifactId>
+              <version>5.13.0.202109080827-r</version>
+            </dependency>
+          </dependencies>
+          <executions>
+            <execution>
+              <!-- Runs in compile phase to fail fast in case of formatting issues.-->
+              <id>spotless-check</id>
+              <goals>
+                <goal>check</goal>
+              </goals>
+              <phase>compile</phase>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>com.diffplug.spotless</groupId>
+        <artifactId>spotless-maven-plugin</artifactId>
+        <version>${spotless.version}</version>
+        <configuration>
+          <checkSkip>true</checkSkip>
+          <applySkip>true</applySkip>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
