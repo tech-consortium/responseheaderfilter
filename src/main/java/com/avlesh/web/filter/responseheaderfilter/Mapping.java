@@ -1,31 +1,28 @@
 /**
  * Copyright 2009 Avlesh Singh
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * <p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * <p>Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.avlesh.web.filter.responseheaderfilter;
 
-import java.util.regex.Pattern;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
- * Each &lt;mapping&gt; definition in the <code>configFile</code> is converted into a {@link Mapping}
- * <br/>
- * For a sample rule, click here - {@link ConfigProcessor}
- * <br/>
+ * Each &lt;mapping&gt; definition in the <code>configFile</code> is converted into a {@link
+ * Mapping} <br>
+ * For a sample rule, click here - {@link ConfigProcessor} <br>
  * For parsing rules, click here - {@link ConfigProcessor#processConfig()}
+ *
  * @see ConfigProcessor
  * @see ResponseHeaderFilter
  */
@@ -36,7 +33,7 @@ public class Mapping {
   private Map<Condition, List<ResponseHeader>> conditionalResponseHeaders;
 
   /**
-   * Comprises of parsed values for a &lt;conditional&gt; tag <br/>
+   * Comprises of parsed values for a &lt;conditional&gt; tag <br>
    * For parsing rules, click here - {@link ConfigProcessor#getCondition(org.w3c.dom.Node)}
    *
    * @see Mapping
@@ -66,7 +63,7 @@ public class Mapping {
   }
 
   /**
-   * Comprises of parsed values for &lt;header&gt; nodes inside a &lt;response-headers&gt; tag<br/>
+   * Comprises of parsed values for &lt;header&gt; nodes inside a &lt;response-headers&gt; tag<br>
    * For parsing rules, click here - {@link ConfigProcessor#getResponseHeader(org.w3c.dom.Node)}
    *
    * @see Mapping
@@ -123,7 +120,8 @@ public class Mapping {
     return conditionalResponseHeaders;
   }
 
-  public void setConditionalResponseHeaders(Map<Condition, List<ResponseHeader>> conditionalResponseHeaders) {
+  public void setConditionalResponseHeaders(
+      Map<Condition, List<ResponseHeader>> conditionalResponseHeaders) {
     this.conditionalResponseHeaders = conditionalResponseHeaders;
   }
 }

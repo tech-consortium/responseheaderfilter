@@ -5,6 +5,12 @@
   <groupId>com.avlesh.web.filter</groupId>
   <artifactId>responseheaderfilter</artifactId>
   <version>2.0-SNAPSHOT</version>
+  <distributionManagement>
+    <repository>
+      <id>internal</id>
+      <url>file://${project.build.directory}/mvn-repo</url>
+    </repository>
+  </distributionManagement>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -12,43 +18,53 @@
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <java.version>${maven.compiler.source}</java.version>
-    <spotless.version>2.22.3</spotless.version>
+    <spotless.version>2.22.5</spotless.version>
+    <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
+    <ossindex-maven-plugin.version>3.2.0</ossindex-maven-plugin.version>
+    <ossindex-maven-enforcer-rules.version>${ossindex-maven-plugin.version}</ossindex-maven-enforcer-rules.version>
   </properties>
 
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>com.google.googlejavaformat</groupId>
-        <artifactId>google-java-format</artifactId>
-        <version>1.15.0</version>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-collections4</artifactId>
+        <version>4.4</version>
       </dependency>
       <dependency>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.10.1</version>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>3.12.0</version>
+      </dependency>
+      <dependency>
+        <groupId>jakarta.servlet</groupId>
+        <artifactId>jakarta.servlet-api</artifactId>
+        <version>5.0.0</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.7.36</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
   <dependencies>
     <dependency>
-      <groupId>commons-collections</groupId>
-      <artifactId>commons-collections</artifactId>
-      <version>3.2.1</version>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-collections4</artifactId>
     </dependency>
     <dependency>
-      <groupId>commons-lang</groupId>
-      <artifactId>commons-lang</artifactId>
-      <version>2.0</version>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
     </dependency>
     <dependency>
-      <groupId>commons-logging</groupId>
-      <artifactId>commons-logging</artifactId>
-      <version>1.0.4</version>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
     </dependency>
     <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <version>2.4</version>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
     </dependency>
   </dependencies>
   <build>
@@ -56,12 +72,45 @@
       <plugins>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>3.2.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>3.0.0-M2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>3.0.0-M1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.2.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.2.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.12.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.0.0-M6</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>${maven-compiler-plugin.version}</version>
           <configuration>
             <release>${java.version}</release>
-            <source>${java.version}</source>
-            <target>${java.version}</target>
             <encoding>${project.build.sourceEncoding}</encoding>
             <optimize>false</optimize>
             <showDeprecation>true</showDeprecation>
@@ -71,17 +120,90 @@
               <arg>-Xlint:all</arg>
               <arg>-Xmaxwarns</arg>
               <arg>25</arg>
-              <arg>-J--add-opens=-Jjdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED</arg>
-              <arg>-J--add-opens=-Jjdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED</arg>
-              <arg>-J--add-opens=-Jjdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</arg>
-              <arg>-J--add-opens=-Jjdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED</arg>
-              <arg>-J--add-opens=-Jjdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
-              <arg>-J--add-opens=-Jjdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED</arg>
-              <arg>-J--add-opens=-Jjdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>
-              <arg>-J--add-opens=-Jjdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</arg>
-              <arg>-J--add-opens=-Jjdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
             </compilerArgs>
           </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-enforcer-plugin</artifactId>
+          <version>${maven-enforcer-plugin.version}</version>
+          <dependencies>
+            <dependency>
+              <groupId>org.sonatype.ossindex.maven</groupId>
+              <artifactId>ossindex-maven-enforcer-rules</artifactId>
+              <version>${ossindex-maven-enforcer-rules.version}</version>
+            </dependency>
+          </dependencies>
+          <executions>
+            <execution>
+              <id>enforce-banned-dependencies</id>
+              <goals>
+                <goal>enforce</goal>
+              </goals>
+              <configuration>
+                <rules>
+                  <bannedDependencies>
+                    <excludes>
+                      <exclude>log4j:log4j</exclude>
+                      <exclude>org.apache.logging.log4j</exclude>
+                    </excludes>
+                    <includes>
+                      <!--only 2.71.1 or greater of log4j2 is allowed-->
+                      <include>org.apache.logging.log4j:*:[2.17.2,]</include>
+                    </includes>
+                    <searchTransitive>true</searchTransitive>
+                  </bannedDependencies>
+                </rules>
+                <fail>true</fail>
+              </configuration>
+            </execution>
+            <execution>
+              <id>enforce-versions</id>
+              <goals>
+                <goal>enforce</goal>
+              </goals>
+              <configuration>
+                <rules>
+                  <requireMavenVersion>
+                    <version>3.8.5</version>
+                  </requireMavenVersion>
+                  <requireJavaVersion>
+                    <version>${java.version}</version>
+                  </requireJavaVersion>
+                  <banDuplicatePomDependencyVersions></banDuplicatePomDependencyVersions>
+                  <dependencyConvergence></dependencyConvergence>
+                </rules>
+              </configuration>
+            </execution>
+            <execution>
+              <id>vulnerability-checks</id>
+              <goals>
+                <goal>enforce</goal>
+              </goals>
+              <phase>validate</phase>
+              <configuration>
+                <rules>
+                  <banVulnerable implementation="org.sonatype.ossindex.maven.enforcer.BanVulnerableDependencies">
+                    <authId>ossindex</authId>
+                    <level>ERROR</level>
+                    <excludeCoordinates>
+
+                    </excludeCoordinates>
+                  </banVulnerable>
+                </rules>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>versions-maven-plugin</artifactId>
+          <version>2.10.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-wrapper-plugin</artifactId>
+          <version>3.1.1</version>
         </plugin>
         <plugin>
           <groupId>com.diffplug.spotless</groupId>
@@ -145,31 +267,7 @@
                 <!-- Sort plugin executions -->
               </sortPom>
             </pom>
-            <java>
-              <googleJavaFormat>
-                <!-- Optional, available versions: https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22com.google.googlejavaformat%22%20AND%20a%3A%22google-java-format%22 -->
-                <version>1.8</version>
-                <!-- Optional, available versions: GOOGLE, AOSP  https://github.com/google/google-java-format/blob/master/core/src/main/java/com/google/googlejavaformat/java/JavaFormatterOptions.java -->
-                <style>GOOGLE</style>
-                <reflowLongStrings>true</reflowLongStrings>
-                <groupArtifact>com.google.googlejavaformat:google-java-format</groupArtifact>
-              </googleJavaFormat>
-              <encoding>${project.build.sourceEncoding}</encoding>
-            </java>
-            <encoding>${project.build.sourceEncoding}</encoding>
           </configuration>
-          <dependencies>
-            <dependency>
-              <groupId>com.google.googlejavaformat</groupId>
-              <artifactId>google-java-format</artifactId>
-              <version>1.15.0</version>
-            </dependency>
-            <dependency>
-              <groupId>org.eclipse.jgit</groupId>
-              <artifactId>org.eclipse.jgit</artifactId>
-              <version>5.13.0.202109080827-r</version>
-            </dependency>
-          </dependencies>
           <executions>
             <execution>
               <!-- Runs in compile phase to fail fast in case of formatting issues.-->
@@ -185,15 +283,25 @@
     </pluginManagement>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>versions-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
         <groupId>com.diffplug.spotless</groupId>
         <artifactId>spotless-maven-plugin</artifactId>
-        <version>${spotless.version}</version>
         <configuration>
-          <checkSkip>true</checkSkip>
-          <applySkip>true</applySkip>
+          <checkSkip>false</checkSkip>
+          <applySkip>false</applySkip>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-wrapper-plugin</artifactId>
       </plugin>
     </plugins>
   </build>
-
 </project>

@@ -59,7 +59,7 @@ import org.apache.commons.lang.StringUtils;
  * @see ConfigProcessor#processConfig()
  */
 public class ResponseHeaderFilter implements Filter {
-  private static Log logger = LogFactory.getLog(ResponseHeaderFilter.class);
+  private static Logger logger = LoggerFactory.getLogger(ResponseHeaderFilter.class);
 
   //default config file
   private String configFileName = "/WEB-INF/response-header-manager.xml";

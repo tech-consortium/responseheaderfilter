@@ -1,0 +1,22 @@
+# EditorConfig helps developers define and maintain consistent
+# coding styles between different editors and IDEs
+# editorconfig.org
+
+root = true
+
+[*]
+
+# Don't change or you will cause Checkstyle failures.
+charset = utf-8
+end_of_line = lf
+indent_size = 2
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.txt]
+indent_style = tab
+indent_size = 2
+
+[*.{diff,md}]
+trim_trailing_whitespace = false
