@@ -8,16 +8,14 @@
 
   <distributionManagement>
     <repository>
-      <uniqueVersion>false</uniqueVersion>
-      <id>tc-releases-repo</id>
-      <name>TC Public Releases Repository</name>
-      <url>https://github.com/tech-consortium/repository/releases</url>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/tech-consortium/responseheaderfilter</url>
     </repository>
     <snapshotRepository>
-      <uniqueVersion>true</uniqueVersion>
-      <id>tc-snapshots-repo</id>
-      <name>TC Public Snapshot Repository</name>
-      <url>https://github.com/tech-consortium/repository/snapshots</url>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/tech-consortium/responseheaderfilter</url>
     </snapshotRepository>
   </distributionManagement>
 
@@ -85,9 +83,9 @@
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
-      <id>tc-snapshots-repo</id>
-      <name>TC Public Snapshot Repository</name>
-      <url>https://github.com/tech-consortium/repository/snapshots</url>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/tech-consortium/responseheaderfilter</url>
     </repository>
   </repositories>
   <pluginRepositories>
@@ -98,9 +96,9 @@
       <snapshots>
         <enabled>true</enabled>
       </snapshots>
-      <id>tc-snapshots-repo</id>
-      <name>TC Public Snapshot Repository</name>
-      <url>https://github.com/tech-consortium/repository/snapshots</url>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/tech-consortium/responseheaderfilter</url>
     </pluginRepository>
   </pluginRepositories>
   <build>
