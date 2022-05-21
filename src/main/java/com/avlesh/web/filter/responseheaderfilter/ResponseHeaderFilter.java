@@ -16,18 +16,18 @@
 
 package com.avlesh.web.filter.responseheaderfilter;
 
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.File;
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.util.concurrent.ConcurrentHashMap;
-import org.apache.commons.logging.LogFactory;
-import org.apache.commons.logging.Log;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <code>ResponseHeaderFilter</code> is a Java Web Filter for any J2EE compliant web application server
