@@ -20,10 +20,18 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/**
+ * <p>DefaultMappingProcessor class.</p>
+ *
+ * @author dmclau
+ * @version $Id: $Id
+ */
 public class DefaultMappingProcessor implements MappingProcessor {
+  /** {@inheritDoc} */
   public void preProcess(HttpServletRequest request, HttpServletResponse response, Mapping applicableMapping) {
   }
 
+  /** {@inheritDoc} */
   public void applyHeaders(HttpServletRequest request,
                            HttpServletResponse response, 
                            List<Mapping.ResponseHeader> responseHeaders,
@@ -33,6 +41,7 @@ public class DefaultMappingProcessor implements MappingProcessor {
     }
   }
 
+  /** {@inheritDoc} */
   public void postProcess(HttpServletRequest request, HttpServletResponse response, Mapping applicableMapping) {
   }
 }

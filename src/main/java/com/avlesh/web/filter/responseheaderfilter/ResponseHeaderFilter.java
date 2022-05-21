@@ -45,10 +45,10 @@ import org.slf4j.LoggerFactory;
  *
  * This filter performs two main tasks:
  * <ol>
- *  <li>Implements the rules ({@link Mapping}) obtained
- *  using {@link ConfigProcessor#getRuleMap()}.
+ *  <li>Implements the rules ({@link com.avlesh.web.filter.responseheaderfilter.Mapping}) obtained
+ *  using {@link com.avlesh.web.filter.responseheaderfilter.ConfigProcessor#getRuleMap()}.
  *  </li>
- *  <li>Based on the {@link ConfReloadInfo}, trigger a reload of the configuration if the
+ *  <li>Based on the {@link com.avlesh.web.filter.responseheaderfilter.ResponseHeaderFilter.ConfReloadInfo}, trigger a reload of the configuration if the
  *  <code>configFile</code> gets modified.
  *  </li>
  * </ol>
@@ -57,6 +57,8 @@ import org.slf4j.LoggerFactory;
  *
  * @see ConfigProcessor
  * @see ConfigProcessor#processConfig()
+ * @author dmclau
+ * @version $Id: $Id
  */
 public class ResponseHeaderFilter implements Filter {
   private static Logger logger = LoggerFactory.getLogger(ResponseHeaderFilter.class);
@@ -72,6 +74,7 @@ public class ResponseHeaderFilter implements Filter {
   private static Map<Pattern, Mapping> rules = new ConcurrentHashMap<Pattern, Mapping>();
   private static List<Pattern> urlPatterns = new ArrayList<Pattern>();
   
+  /** {@inheritDoc} */
   public void init(FilterConfig filterConfig) throws ServletException, RuntimeException {
     //if specified in web.xml, take that value as the config file
     if(StringUtils.isNotEmpty(filterConfig.getInitParameter("configFile"))){
@@ -109,6 +112,8 @@ public class ResponseHeaderFilter implements Filter {
   }
 
   /**
+   * {@inheritDoc}
+   *
    * Underneath are the rules, which are used to process the response and apply a corresponding {@link Mapping}
    * <ol>
    *  <li>The rules are applied on a <code>base uri.</code></li>
@@ -192,7 +197,7 @@ public class ResponseHeaderFilter implements Filter {
   }
 
   /**
-   * Matches an incoming url against the available patterns in the {@link Mapping} map. Involves an iteration over the map
+   * Matches an incoming url against the available patterns in the {@link com.avlesh.web.filter.responseheaderfilter.Mapping} map. Involves an iteration over the map
    * keys for each request. Iterates in a reverse order on the map. <i>Last rule wins</i>.
    *
    * @param requestUri (Incoming request uri)
@@ -283,6 +288,9 @@ public class ResponseHeaderFilter implements Filter {
     processorClass.postProcess(request, response, rulesForThisUri);
   }
 
+  /**
+   * <p>destroy.</p>
+   */
   public void destroy(){
   }
 

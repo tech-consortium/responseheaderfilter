@@ -18,16 +18,28 @@ package com.avlesh.web.filter.responseheaderfilter;
  *
  * @see ConfigProcessor
  * @see ResponseHeaderFilter
+ * @author dmclau
+ * @version $Id: $Id
  */
 public class Constants {
+  /** Constant <code>RESPONSE_HEADER_MAPPER="response-header-mapper"</code> */
   public static final String RESPONSE_HEADER_MAPPER = "response-header-mapper";
+  /** Constant <code>MAPPING="mapping"</code> */
   public static final String MAPPING = "mapping";
+  /** Constant <code>DEFAULT="default"</code> */
   public static final String DEFAULT = "default";
+  /** Constant <code>CONDITIONAL="conditional"</code> */
   public static final String CONDITIONAL = "conditional";
+  /** Constant <code>CONDITIONAL_QUERY_PARAM_NAME="queryParamName"</code> */
   public static final String CONDITIONAL_QUERY_PARAM_NAME = "queryParamName";
+  /** Constant <code>CONDITIONAL_QUERY_PARAM_VALUE="queryParamValue"</code> */
   public static final String CONDITIONAL_QUERY_PARAM_VALUE = "queryParamValue";
+  /** Constant <code>RESPONSE_HEADERS="response-headers"</code> */
   public static final String RESPONSE_HEADERS = "response-headers";
+  /** Constant <code>HEADER="header"</code> */
   public static final String HEADER = "header";
+  /** Constant <code>HEADER_KEY="key"</code> */
   public static final String HEADER_KEY = "key";
+  /** Constant <code>HEADER_VALUE="value"</code> */
   public static final String HEADER_VALUE = "value";
 }

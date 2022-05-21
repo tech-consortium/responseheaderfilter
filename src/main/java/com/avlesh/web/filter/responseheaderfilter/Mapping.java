@@ -20,11 +20,13 @@ import java.util.regex.Pattern;
 /**
  * Each &lt;mapping&gt; definition in the <code>configFile</code> is converted into a {@link
  * Mapping} <br>
- * For a sample rule, click here - {@link ConfigProcessor} <br>
- * For parsing rules, click here - {@link ConfigProcessor#processConfig()}
+ * For a sample rule, click here - {@link com.avlesh.web.filter.responseheaderfilter.ConfigProcessor} <br>
+ * For parsing rules, click here - {@link com.avlesh.web.filter.responseheaderfilter.ConfigProcessor#processConfig()}
  *
  * @see ConfigProcessor
  * @see ResponseHeaderFilter
+ * @author dmclau
+ * @version $Id: $Id
  */
 public class Mapping {
   private MappingProcessor processorClass;
@@ -92,34 +94,74 @@ public class Mapping {
     }
   }
 
+  /**
+   * <p>Getter for the field <code>processorClass</code>.</p>
+   *
+   * @return a {@link com.avlesh.web.filter.responseheaderfilter.MappingProcessor} object
+   */
   public MappingProcessor getProcessorClass() {
     return processorClass;
   }
 
+  /**
+   * <p>Setter for the field <code>processorClass</code>.</p>
+   *
+   * @param processorClass a {@link com.avlesh.web.filter.responseheaderfilter.MappingProcessor} object
+   */
   public void setProcessorClass(MappingProcessor processorClass) {
     this.processorClass = processorClass;
   }
 
+  /**
+   * <p>Getter for the field <code>url</code>.</p>
+   *
+   * @return a {@link java.util.regex.Pattern} object
+   */
   public Pattern getUrl() {
     return url;
   }
 
+  /**
+   * <p>Setter for the field <code>url</code>.</p>
+   *
+   * @param url a {@link java.util.regex.Pattern} object
+   */
   public void setUrl(Pattern url) {
     this.url = url;
   }
 
+  /**
+   * <p>Getter for the field <code>defaultResponseHeaders</code>.</p>
+   *
+   * @return a {@link java.util.List} object
+   */
   public List<ResponseHeader> getDefaultResponseHeaders() {
     return defaultResponseHeaders;
   }
 
+  /**
+   * <p>Setter for the field <code>defaultResponseHeaders</code>.</p>
+   *
+   * @param defaultResponseHeaders a {@link java.util.List} object
+   */
   public void setDefaultResponseHeaders(List<ResponseHeader> defaultResponseHeaders) {
     this.defaultResponseHeaders = defaultResponseHeaders;
   }
 
+  /**
+   * <p>Getter for the field <code>conditionalResponseHeaders</code>.</p>
+   *
+   * @return a {@link java.util.Map} object
+   */
   public Map<Condition, List<ResponseHeader>> getConditionalResponseHeaders() {
     return conditionalResponseHeaders;
   }
 
+  /**
+   * <p>Setter for the field <code>conditionalResponseHeaders</code>.</p>
+   *
+   * @param conditionalResponseHeaders a {@link java.util.Map} object
+   */
   public void setConditionalResponseHeaders(
       Map<Condition, List<ResponseHeader>> conditionalResponseHeaders) {
     this.conditionalResponseHeaders = conditionalResponseHeaders;
