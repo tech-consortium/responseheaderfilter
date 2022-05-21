@@ -4,12 +4,21 @@
 
   <groupId>com.avlesh.web.filter</groupId>
   <artifactId>responseheaderfilter</artifactId>
-  <version>2.0-SNAPSHOT</version>
+  <version>2.0.0-SNAPSHOT</version>
+
   <distributionManagement>
     <repository>
-      <id>internal</id>
-      <url>file://${project.build.directory}/mvn-repo</url>
+      <uniqueVersion>false</uniqueVersion>
+      <id>tc-releases-repo</id>
+      <name>TC Public Releases Repository</name>
+      <url>https://github.com/tech-consortium/repository/releases</url>
     </repository>
+    <snapshotRepository>
+      <uniqueVersion>true</uniqueVersion>
+      <id>tc-snapshots-repo</id>
+      <name>TC Public Snapshot Repository</name>
+      <url>https://github.com/tech-consortium/repository/snapshots</url>
+    </snapshotRepository>
   </distributionManagement>
 
   <properties>
@@ -67,6 +76,33 @@
       <artifactId>slf4j-api</artifactId>
     </dependency>
   </dependencies>
+  <repositories>
+    <repository>
+      <releases>
+        <enabled>true</enabled>
+        <updatePolicy>never</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>tc-snapshots-repo</id>
+      <name>TC Public Snapshot Repository</name>
+      <url>https://github.com/tech-consortium/repository/snapshots</url>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>tc-snapshots-repo</id>
+      <name>TC Public Snapshot Repository</name>
+      <url>https://github.com/tech-consortium/repository/snapshots</url>
+    </pluginRepository>
+  </pluginRepositories>
   <build>
     <pluginManagement>
       <plugins>
@@ -304,4 +340,103 @@
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>snapshot</id>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-deploy-plugin</artifactId>
+              <version>3.0.0-M2</version>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>3.2.1</version>
+            <inherited>true</inherited>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+                <phase>verify</phase>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>3.4.0</version>
+            <inherited>true</inherited>
+            <configuration>
+              <minmemory>128m</minmemory>
+              <maxmemory>1g</maxmemory>
+            </configuration>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>release</id>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-deploy-plugin</artifactId>
+              <version>3.0.0-M2</version>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <inherited>true</inherited>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+                <phase>verify</phase>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <inherited>true</inherited>
+            <configuration>
+              <minmemory>128m</minmemory>
+              <maxmemory>1g</maxmemory>
+            </configuration>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
