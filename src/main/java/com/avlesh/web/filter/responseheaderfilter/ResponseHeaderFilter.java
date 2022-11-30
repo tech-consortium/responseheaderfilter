@@ -292,6 +292,10 @@ public class ResponseHeaderFilter implements Filter {
    * <p>destroy.</p>
    */
   public void destroy(){
+    rules.clear();
+    rules = null;
+    mappings.clear();
+    mappings = null;
   }
 
   /**
