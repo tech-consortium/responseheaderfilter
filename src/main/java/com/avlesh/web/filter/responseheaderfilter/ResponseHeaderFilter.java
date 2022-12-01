@@ -73,7 +73,7 @@ public class ResponseHeaderFilter implements Filter {
   //map of rules; is updated accored to rules specified in the confReloadInfo
   private static Map<Pattern, Mapping> rules = new ConcurrentHashMap<Pattern, Mapping>();
   private static List<Pattern> urlPatterns = new ArrayList<Pattern>();
-  
+
   /** {@inheritDoc} */
   public void init(FilterConfig filterConfig) throws ServletException, RuntimeException {
     //if specified in web.xml, take that value as the config file
@@ -91,7 +91,7 @@ public class ResponseHeaderFilter implements Filter {
     //object to hold preferences related to conf reloading
     confReloadInfo = new ConfReloadInfo();
     String reloadCheckIntervalStr = filterConfig.getInitParameter("reloadCheckInterval");
-    //if web.xml filter definition has no "reloadCheckInterval" applied, default values in ConfReloadInfo are used  
+    //if web.xml filter definition has no "reloadCheckInterval" applied, default values in ConfReloadInfo are used
     if(StringUtils.isNotEmpty(reloadCheckIntervalStr)){
       Integer reloadCheckInterval = Integer.valueOf(reloadCheckIntervalStr);
       if(reloadCheckInterval > 0){
@@ -294,8 +294,8 @@ public class ResponseHeaderFilter implements Filter {
   public void destroy(){
     rules.clear();
     rules = null;
-    mappings.clear();
-    mappings = null;
+    urlPatterns.clear();
+    urlPatterns = null;
   }
 
   /**
