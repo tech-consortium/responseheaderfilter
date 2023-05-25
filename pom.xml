@@ -8,13 +8,35 @@
 
   <url>https://github.com/tech-consortium/responseheaderfilter</url>
 
+  <organization>
+    <name>Technology Consortium, LLC</name>
+    <url>https://tech-consortium.com</url>
+  </organization>
+
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
       <distribution>repo</distribution>
     </license>
   </licenses>
+
+  <developers>
+    <developer>
+      <name>Avlesh Singh</name>
+      <organization>WebEngage</organization>
+      <roles>
+        <role>developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <name>Dan McLaughlin</name>
+      <organization>Technology Consortium, LLC</organization>
+      <roles>
+        <role>contributor</role>
+      </roles>
+    </developer>
+  </developers>
 
   <scm>
     <connection>scm:git:git://github.com/tech-consortium/responseheaderfilter.git</connection>
@@ -41,39 +63,92 @@
   </distributionManagement>
 
   <properties>
+    <!-- ================ -->
+    <!-- build properties -->
+    <!-- ================ -->
+    <project.inceptionYear>2009</project.inceptionYear>
+    <maven.plugin.validation>VERBOSE</maven.plugin.validation>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
-    <java.version>${maven.compiler.source}</java.version>
-    <spotless.version>2.22.5</spotless.version>
-    <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
+    <maven.compiler.release>19</maven.compiler.release>
+    <java.version>${maven.compiler.release}</java.version>
+
+    <!-- ===================== -->
+    <!-- maven plugin versions -->
+    <!-- ===================== -->
+    <!-- http://maven.apache.org/plugins/index.html -->
+    <mavan-jar-plugin.version>3.3.0</mavan-jar-plugin.version>
+    <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
+    <maven-changelog-plugin.version>2.3</maven-changelog-plugin.version>
+    <maven-clean-plugin.version>3.2.0</maven-clean-plugin.version>
+    <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+    <maven-dependency-analyzer.version>1.13.0</maven-dependency-analyzer.version>
+    <maven-dependency-plugin.version>3.6.0</maven-dependency-plugin.version>
+    <maven-deploy-plugin.version>3.1.1</maven-deploy-plugin.version>
+    <maven-ear-plugin.version>3.2.0</maven-ear-plugin.version>
+    <maven-enforcer-plugin.version>3.3.0</maven-enforcer-plugin.version>
+    <maven-failsafe-plugin.version>3.1.0</maven-failsafe-plugin.version>
+    <maven-gpg-plugin.version>3.1.0</maven-gpg-plugin.version>
+    <maven-install-plugin.version>3.1.1</maven-install-plugin.version>
+    <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
+    <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
+    <maven-jarsigner-plugin.version>3.0.0</maven-jarsigner-plugin.version>
+    <maven-jxr-plugin.version>3.3.0</maven-jxr-plugin.version>
+    <license-maven-plugin.version/>
+    <maven-pmd-plugin.version>3.20.0</maven-pmd-plugin.version>
+    <maven-project-info-reports-plugin.version>3.4.3</maven-project-info-reports-plugin.version>
+    <maven-release-plugin.version>3.0.0</maven-release-plugin.version>
+    <maven-remote-resources-plugin.version>3.1.0</maven-remote-resources-plugin.version>
+    <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
+    <maven-scm-provider-svnjava.version>2.2.1</maven-scm-provider-svnjava.version>
+    <maven-site-plugin.version>4.0.0-M8</maven-site-plugin.version>
+    <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
+    <maven-surefire-plugin.version>3.1.0</maven-surefire-plugin.version>
+    <maven-surefire-report-plugin.version>3.0.0</maven-surefire-report-plugin.version>
+    <maven-war-plugin.version>3.3.2</maven-war-plugin.version>
+    <maven-wrapper-plugin.version>3.2.0</maven-wrapper-plugin.version>
+
+    <!-- ========================= -->
+    <!-- 3rd-party plugin versions -->
+    <!-- ========================= -->
+    <license-maven-plugin.version>2.0.1</license-maven-plugin.version>
     <ossindex-maven-plugin.version>3.2.0</ossindex-maven-plugin.version>
     <ossindex-maven-enforcer-rules.version>${ossindex-maven-plugin.version}</ossindex-maven-enforcer-rules.version>
+    <sortpom-maven-plugin.version>3.2.1</sortpom-maven-plugin.version>
+    <versions-maven-plugin.version>2.15.0</versions-maven-plugin.version>
+
+    <!-- =================== -->
+    <!-- dependency versions -->
+    <!-- =================== -->
+    <commons-collections4.version>4.4</commons-collections4.version>
+    <commons-lang3.version>3.12.0</commons-lang3.version>
+    <jakartaee.version>10.0.0</jakartaee.version>
+    <slf4j-api.version>2.0.7</slf4j-api.version>
+
   </properties>
 
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>jakarta.platform</groupId>
+        <artifactId>jakarta.jakartaee-bom</artifactId>
+        <version>${jakartaee.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-collections4</artifactId>
-        <version>4.4</version>
+        <version>${commons-collections4.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-lang3</artifactId>
-        <version>3.12.0</version>
-      </dependency>
-      <dependency>
-        <groupId>jakarta.servlet</groupId>
-        <artifactId>jakarta.servlet-api</artifactId>
-        <version>5.0.0</version>
-        <scope>provided</scope>
+        <version>${commons-lang3.version}</version>
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
-        <version>2.0.5</version>
+        <version>${slf4j-api.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -126,44 +201,58 @@
     <pluginManagement>
       <plugins>
         <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>license-maven-plugin</artifactId>
+          <version>${license-maven-plugin.version}</version>
+          <configuration>
+            <licenseName>apache_v2</licenseName>
+            <addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-gpg-plugin</artifactId>
+          <version>${maven-gpg-plugin.version}</version>
+        </plugin>
+        <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-project-info-reports-plugin</artifactId>
-          <version>3.3.0</version>
+          <version>${maven-project-info-reports-plugin.version}</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-clean-plugin</artifactId>
-          <version>3.2.0</version>
+          <version>${maven-clean-plugin.version}</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-deploy-plugin</artifactId>
-          <version>3.0.0-M2</version>
+          <version>${maven-deploy-plugin.version}</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-install-plugin</artifactId>
-          <version>3.0.0-M1</version>
+          <version>${maven-install-plugin.version}</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
-          <version>3.2.2</version>
+          <version>${maven-jar-plugin.version}</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
-          <version>3.2.0</version>
+          <version>${maven-resources-plugin.version}</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-site-plugin</artifactId>
-          <version>3.12.0</version>
+          <version>${maven-site-plugin.version}</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>3.0.0-M6</version>
+          <version>${maven-surefire-plugin.version}</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -172,7 +261,6 @@
           <configuration>
             <release>${java.version}</release>
             <encoding>${project.build.sourceEncoding}</encoding>
-            <optimize>false</optimize>
             <showDeprecation>true</showDeprecation>
             <showWarnings>true</showWarnings>
             <!--failOnWarning>true</failOnWarning-->
@@ -225,13 +313,13 @@
               <configuration>
                 <rules>
                   <requireMavenVersion>
-                    <version>3.8.5</version>
+                    <version>3.9.2</version>
                   </requireMavenVersion>
                   <requireJavaVersion>
                     <version>${java.version}</version>
                   </requireJavaVersion>
-                  <banDuplicatePomDependencyVersions></banDuplicatePomDependencyVersions>
-                  <dependencyConvergence></dependencyConvergence>
+                  <banDuplicatePomDependencyVersions/>
+                  <dependencyConvergence/>
                 </rules>
               </configuration>
             </execution>
@@ -246,9 +334,7 @@
                   <banVulnerable implementation="org.sonatype.ossindex.maven.enforcer.BanVulnerableDependencies">
                     <authId>ossindex</authId>
                     <level>ERROR</level>
-                    <excludeCoordinates>
-
-                    </excludeCoordinates>
+                    <excludeCoordinates/>
                   </banVulnerable>
                 </rules>
               </configuration>
@@ -258,127 +344,75 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>versions-maven-plugin</artifactId>
-          <version>2.11.0</version>
+          <version>${versions-maven-plugin.version}</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-wrapper-plugin</artifactId>
-          <version>3.1.1</version>
+          <version>${maven-wrapper-plugin.version}</version>
         </plugin>
         <plugin>
-          <groupId>com.diffplug.spotless</groupId>
-          <artifactId>spotless-maven-plugin</artifactId>
-          <version>${spotless.version}</version>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>${maven-javadoc-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>com.github.ekryd.sortpom</groupId>
+          <artifactId>sortpom-maven-plugin</artifactId>
+          <version>${sortpom-maven-plugin.version}</version>
           <configuration>
-            <pom>
-              <!-- These are the defaults, you can override if you want -->
-              <includes>
-                <include>pom.xml</include>
-              </includes>
-
-              <sortPom>
-
-                <encoding>UTF-8</encoding>
-                <!-- The encoding of the pom files -->
-
-                <lineSeparator>${line.separator}</lineSeparator>
-                <!-- line separator to use -->
-
-                <expandEmptyElements>true</expandEmptyElements>
-                <!-- Should empty elements be expanded-->
-
-                <spaceBeforeCloseEmptyElement>false</spaceBeforeCloseEmptyElement>
-                <!-- Should a space be added inside self-closing elements-->
-
-                <keepBlankLines>true</keepBlankLines>
-                <!-- Keep empty lines -->
-
-                <nrOfIndentSpace>2</nrOfIndentSpace>
-                <!-- Indentation -->
-
-                <indentBlankLines>false</indentBlankLines>
-                <!-- Should empty lines be indented -->
-
-                <indentSchemaLocation>false</indentSchemaLocation>
-                <!-- Should schema locations be indended -->
-
-                <predefinedSortOrder>recommended_2008_06</predefinedSortOrder>
-                <!-- Sort order of elements: https://github.com/Ekryd/sortpom/wiki/PredefinedSortOrderProfiles-->
-
-                <sortOrderFile></sortOrderFile>
-                <!-- Custom sort order of elements: https://raw.githubusercontent.com/Ekryd/sortpom/master/sorter/src/main/resources/custom_1.xml -->
-
-                <sortDependencies></sortDependencies>
-                <!-- Sort dependencies: https://github.com/Ekryd/sortpom/wiki/SortDependencies-->
-
-                <sortDependencyExclusions></sortDependencyExclusions>
-                <!-- Sort dependency exclusions: https://github.com/Ekryd/sortpom/wiki/SortDependencies-->
-
-                <sortPlugins></sortPlugins>
-                <!-- Sort plugins: https://github.com/Ekryd/sortpom/wiki/SortPlugins -->
-
-                <sortProperties></sortProperties>
-                <!-- Sort properties -->
-
-                <sortModules></sortModules>
-                <!-- Sort modules -->
-
-                <sortExecutions></sortExecutions>
-                <!-- Sort plugin executions -->
-              </sortPom>
-            </pom>
+            <predefinedSortOrder>recommended_2008_06</predefinedSortOrder>
+            <createBackupFile>false</createBackupFile>
+            <keepBlankLines>true</keepBlankLines>
+            <lineSeparator>\n</lineSeparator>
+            <encoding>${project.build.sourceEncoding}</encoding>
+            <sortProperties>false</sortProperties>
+            <expandEmptyElements>false</expandEmptyElements>
+            <skip>false</skip>
           </configuration>
           <executions>
             <execution>
-              <!-- Runs in compile phase to fail fast in case of formatting issues.-->
-              <id>spotless-check</id>
+              <id>sortpom-sort</id>
               <goals>
-                <goal>check</goal>
+                <goal>sort</goal>
               </goals>
-              <phase>compile</phase>
             </execution>
           </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>${maven-source-plugin.version}</version>
         </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
       <plugin>
+        <groupId>com.github.ekryd.sortpom</groupId>
+        <artifactId>sortpom-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
-        <version>3.0.0</version>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>versions-maven-plugin</artifactId>
-        <version>2.10.0</version>
-      </plugin>
-      <plugin>
-        <groupId>com.diffplug.spotless</groupId>
-        <artifactId>spotless-maven-plugin</artifactId>
-        <version>2.22.5</version>
-        <configuration>
-          <checkSkip>false</checkSkip>
-          <applySkip>false</applySkip>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-wrapper-plugin</artifactId>
-        <version>3.1.0</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.10.1</version>
         <configuration>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
+          <release>${java.version}</release>
         </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>3.2.2</version>
         <configuration>
           <archive>
             <manifest>
@@ -388,30 +422,6 @@
           </archive>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.4.0</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <version>3.2.1</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
     </plugins>
   </build>
   <reporting>
@@ -419,13 +429,11 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
-        <version>3.12.0</version>
         <configuration>
           <reporting>
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-project-info-reports-plugin</artifactId>
-              <version>2.2</version>
               <configuration>
                 <dependencyDetailsEnabled>true</dependencyDetailsEnabled>
                 <dependencyLocationsEnabled>true</dependencyLocationsEnabled>
@@ -434,17 +442,14 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-javadoc-plugin</artifactId>
-              <version>2.7</version>
             </plugin>
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-surefire-report-plugin</artifactId>
-              <version>2.6</version>
             </plugin>
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-checkstyle-plugin</artifactId>
-              <version>2.6</version>
             </plugin>
           </reporting>
         </configuration>
@@ -456,20 +461,10 @@
     <profile>
       <id>snapshot</id>
       <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-deploy-plugin</artifactId>
-              <version>3.0.0-M2</version>
-            </plugin>
-          </plugins>
-        </pluginManagement>
         <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-source-plugin</artifactId>
-            <version>3.2.1</version>
             <inherited>true</inherited>
             <executions>
               <execution>
@@ -484,7 +479,6 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
-            <version>3.4.0</version>
             <inherited>true</inherited>
             <configuration>
               <minmemory>128m</minmemory>
@@ -505,20 +499,10 @@
     <profile>
       <id>release</id>
       <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-deploy-plugin</artifactId>
-              <version>3.0.0-M2</version>
-            </plugin>
-          </plugins>
-        </pluginManagement>
         <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-source-plugin</artifactId>
-            <version>3.2.1</version>
             <inherited>true</inherited>
             <executions>
               <execution>
@@ -533,7 +517,6 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
-            <version>3.4.0</version>
             <inherited>true</inherited>
             <configuration>
               <minmemory>128m</minmemory>
@@ -545,6 +528,19 @@
                 <goals>
                   <goal>jar</goal>
                 </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+                <phase>verify</phase>
               </execution>
             </executions>
           </plugin>
