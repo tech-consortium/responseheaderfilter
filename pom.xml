@@ -94,7 +94,7 @@
     <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
     <maven-jarsigner-plugin.version>3.0.0</maven-jarsigner-plugin.version>
     <maven-jxr-plugin.version>3.3.0</maven-jxr-plugin.version>
-    <license-maven-plugin.version />
+    <license-maven-plugin.version/>
     <maven-pmd-plugin.version>3.20.0</maven-pmd-plugin.version>
     <maven-project-info-reports-plugin.version>3.4.3</maven-project-info-reports-plugin.version>
     <maven-release-plugin.version>3.0.0</maven-release-plugin.version>
@@ -179,6 +179,7 @@
       </releases>
       <snapshots>
         <enabled>false</enabled>
+        <updatePolicy>always</updatePolicy>
       </snapshots>
       <id>github</id>
       <name>GitHub Packages</name>
@@ -249,6 +250,43 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-site-plugin</artifactId>
           <version>${maven-site-plugin.version}</version>
+          <configuration>
+            <generateSitemap>true</generateSitemap>
+            <skipDeploy>true</skipDeploy>
+          </configuration>
+          <dependencies>
+            <dependency>
+              <!--
+              | allows markdown syntax for site generation. To use it place files below
+              | src/site/markdown/[filename].md
+              -->
+              <groupId>org.apache.maven.doxia</groupId>
+              <artifactId>doxia-module-markdown</artifactId>
+              <version>1.11.1</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+        <plugin>
+          <groupId>com.github.github</groupId>
+          <artifactId>site-maven-plugin</artifactId>
+          <version>0.12</version>
+          <configuration>
+            <server>github</server>
+            <message>Site for ${project.artifactId}:${project.version}</message>
+            <!-- The location where the site is uploaded -->
+            <!--            <path>${project.distributionManagement.site.url}</path>-->
+            <!-- Use merge or override the content -->
+            <merge>true</merge>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>site</goal>
+              </goals>
+              <!-- select the Maven phase in which the plugin will be executed -->
+              <phase>site-deploy</phase>
+            </execution>
+          </executions>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -319,8 +357,8 @@
                   <requireJavaVersion>
                     <version>${java.version}</version>
                   </requireJavaVersion>
-                  <banDuplicatePomDependencyVersions />
-                  <dependencyConvergence />
+                  <banDuplicatePomDependencyVersions/>
+                  <dependencyConvergence/>
                 </rules>
               </configuration>
             </execution>
@@ -335,7 +373,7 @@
                   <banVulnerable implementation="org.sonatype.ossindex.maven.enforcer.BanVulnerableDependencies">
                     <authId>ossindex</authId>
                     <level>ERROR</level>
-                    <excludeCoordinates />
+                    <excludeCoordinates/>
                   </banVulnerable>
                 </rules>
               </configuration>
@@ -423,7 +461,36 @@
           </archive>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-descriptor</id>
+            <goals>
+              <goal>attach-descriptor</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <!-- Deploy the web site -->
+        <groupId>com.github.github</groupId>
+        <artifactId>site-maven-plugin</artifactId>
+      </plugin>
     </plugins>
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.scm</groupId>
+        <artifactId>maven-scm-provider-gitexe</artifactId>
+        <version>1.13.0</version>
+      </extension>
+      <extension>
+        <groupId>org.apache.maven.scm</groupId>
+        <artifactId>maven-scm-manager-plexus</artifactId>
+        <version>1.13.0</version>
+      </extension>
+    </extensions>
   </build>
   <reporting>
     <plugins>
