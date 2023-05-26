@@ -4,7 +4,7 @@
 
   <groupId>com.tech-consortium</groupId>
   <artifactId>response-header-filter</artifactId>
-  <version>2.0.0</version>
+  <version>2.0.1-SNAPSHOT</version>
   <name>Response Header Filter</name>
   <description>Response Header Filter</description>
 
@@ -43,7 +43,7 @@
   <scm>
     <connection>scm:git:git://github.com/tech-consortium/responseheaderfilter.git</connection>
     <developerConnection>scm:git:git@github.com:tech-consortium/responseheaderfilter.git</developerConnection>
-    <tag>response-header-filter-2.0.0</tag>
+    <tag>HEAD</tag>
     <url>https://github.com/tech-consortium/responseheaderfilter</url>
   </scm>
 
@@ -358,8 +358,8 @@
                   <requireJavaVersion>
                     <version>${java.version}</version>
                   </requireJavaVersion>
-                  <banDuplicatePomDependencyVersions/>
-                  <dependencyConvergence/>
+                  <banDuplicatePomDependencyVersions />
+                  <dependencyConvergence />
                 </rules>
               </configuration>
             </execution>
@@ -374,7 +374,7 @@
                   <banVulnerable implementation="org.sonatype.ossindex.maven.enforcer.BanVulnerableDependencies">
                     <authId>ossindex</authId>
                     <level>ERROR</level>
-                    <excludeCoordinates/>
+                    <excludeCoordinates />
                   </banVulnerable>
                 </rules>
               </configuration>
