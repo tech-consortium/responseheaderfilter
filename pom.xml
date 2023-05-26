@@ -358,8 +358,8 @@
                   <requireJavaVersion>
                     <version>${java.version}</version>
                   </requireJavaVersion>
-                  <banDuplicatePomDependencyVersions />
-                  <dependencyConvergence />
+                  <banDuplicatePomDependencyVersions/>
+                  <dependencyConvergence/>
                 </rules>
               </configuration>
             </execution>
@@ -374,7 +374,7 @@
                   <banVulnerable implementation="org.sonatype.ossindex.maven.enforcer.BanVulnerableDependencies">
                     <authId>ossindex</authId>
                     <level>ERROR</level>
-                    <excludeCoordinates />
+                    <excludeCoordinates/>
                   </banVulnerable>
                 </rules>
               </configuration>
